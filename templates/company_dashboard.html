@@ -1,0 +1,204 @@
+{% extends "base.html" %}
+
+{% block title %}Company Dashboard - SurakshaID{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+
+    <!-- Header Section -->
+    <div class="row">
+        <div class="col-12 mb-4">
+            <div class="card bg-dark text-white">
+                <div class="card-body">
+                    <h2 class="card-title">
+                        <i class="fas fa-building"></i> {{ company_name }} Dashboard
+                    </h2>
+                    <p class="card-text">View employee verification summary</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search + Filter Section -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <form method="GET">
+                <div class="row g-2">
+
+    <div class="col-md-3">
+        <input type="text"
+               name="search"
+               class="form-control"
+               placeholder="Search by Name or VID"
+               value="{{ request.args.get('search','') }}">
+    </div>
+
+    <div class="col-md-2">
+        <select name="police_status" class="form-select">
+            <option value="">Police</option>
+            <option value="PENDING">Pending</option>
+            <option value="CLEAR">Clear</option>
+            <option value="FLAGGED">Flagged</option>
+        </select>
+    </div>
+	<div class="col-md-2">
+        <select name="address_status" class="form-select">
+            <option value="">Address</option>
+            <option value="PENDING">Pending</option>
+            <option value="CLEAR">Clear</option>
+            <option value="FLAGGED">Flagged</option>
+        </select>
+    </div>
+
+    <!-- 🔥 ADD THIS -->
+    <div class="col-md-2">
+        <select name="criminal_status" class="form-select">
+            <option value="">Criminal</option>
+            <option value="PENDING">Pending</option>
+            <option value="CLEAR">Clear</option>
+            <option value="FLAGGED">Flagged</option>
+        </select>
+    </div>
+	<div class="col-md-2">
+        <select name="eligibility_status" class="form-select">
+            <option value="">Eligibility</option>
+            <option value="SAFE">Safe</option>
+            <option value="RESTRICTED">Restricted</option>
+        </select>
+    </div>
+
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-primary w-100">
+            <i class="fas fa-search"></i> Filter
+        </button>
+    </div>
+
+</div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Employee Table -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+               <div class="card-header d-flex justify-content-between align-items-center">
+    <h5 class="mb-0">
+        <i class="fas fa-users"></i> Company Employees
+        <span class="badge bg-primary">{{ employees|length }}</span>
+    </h5>
+
+    {% if employees %}
+    <a href="{{ url_for('company_export_csv') }}"
+       class="btn btn-outline-primary btn-sm">
+        <i class="fas fa-download"></i> Export
+    </a>
+    {% endif %}
+</div>
+
+                <div class="card-body">
+                    {% if employees %}
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Verification ID</th>
+                                    <th>Employee ID</th>
+                                    <th>Name</th>
+                                    <th>Job Role</th>
+                                    <th>Police</th>
+                                    <th>Address</th>
+                                    <th>Criminal</th>
+                                    <th>Eligibility</th>
+									<th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for emp in employees %}
+                                <tr>
+                                    <td><strong>{{ emp.VERIFICATION_ID }}</strong></td>
+                                    <td>{{ emp.EMP_ID }}</td>
+                                    <td>{{ emp.NAME }}</td>
+                                    <td>{{ emp.JOB_ROLE }}</td>
+
+                                    <td>
+                                        <span class="status-badge status-{{ emp.POLICE_VERIFICATION_STATUS.lower() }}">
+                                            {{ emp.POLICE_VERIFICATION_STATUS }}
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        <span class="status-badge status-{{ emp.ADDRESS_VERIFICATION_STATUS.lower() }}">
+                                            {{ emp.ADDRESS_VERIFICATION_STATUS }}
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        <span class="status-badge status-{{ emp.CRIMINAL_VERIFICATION_STATUS.lower() }}">
+                                            {{ emp.CRIMINAL_VERIFICATION_STATUS }}
+                                        </span>
+                                    </td>
+
+                                    <td>
+    <span class="status-badge status-{{ emp.ELIGIBILITY_STATUS.lower() }}">
+        {{ emp.ELIGIBILITY_STATUS }}
+    </span>
+</td>
+
+<td>
+    <a href="{{ url_for('company_view_user', vid=emp.VERIFICATION_ID) }}"
+       class="btn btn-sm btn-dark">
+        <i class="fas fa-eye"></i> View
+    </a>
+</td>
+
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                        <div class="alert alert-warning text-center">
+                            No employees found for this company.
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Cards (Same style as Authorized) -->
+    <div class="row mb-4">
+
+        <div class="col-md-3">
+            <div class="stat-card">
+                <div class="stat-number">{{ total_users }}</div>
+                <div class="stat-label">Total Employees</div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="stat-card">
+                <div class="stat-number text-warning">{{ pending_users }}</div>
+                <div class="stat-label">Pending</div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="stat-card">
+                <div class="stat-number text-success">{{ safe_users }}</div>
+                <div class="stat-label">Safe</div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="stat-card">
+                <div class="stat-number text-danger">{{ restricted_users }}</div>
+                <div class="stat-label">Restricted</div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}
