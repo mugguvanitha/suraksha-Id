@@ -1,0 +1,142 @@
+{
+  "vanithasam47@gmail.com": {
+    "email": "vanithasam47@gmail.com",
+    "phone": "9999999999",
+    "password": "pbkdf2:sha256:600000$plDCqBsx6jokqda4$dafadfc247de6fbf67ace47db244e3e345c584c7ee8d30311fa78eee77a038be",
+    "role": "ADMIN",
+    "name": "System administrator",
+    "age": "39",
+    "house_no": "",
+    "locality": "",
+    "village": "",
+    "district": "",
+    "govt_id_type": "Aadhaar",
+    "govt_id_number": "132325367687",
+    "created_date": "2026-02-12"
+  },
+  "auth@suraksha.auth.in": {
+    "email": "auth@suraksha.auth.in",
+    "password": "pbkdf2:sha256:600000$jxUraVJMr9ux8yQf$301f86420a9fc8624341772e34b96198249e431ad07062edde2954af3f86b0d1",
+    "role": "AUTHORIZED",
+    "verifier_type": "POLICE",
+    "created_date": "2026-02-12"
+  },
+  "auth01@suraksha.auth.in": {
+    "email": "auth01@suraksha.auth.in",
+    "password": "pbkdf2:sha256:600000$uOg4VTB5vGf8VW37$1caf4f8ddc8760a1220df4a9c63a9be39d27ee0c79083e6d65095a00ac2d9d8c",
+    "role": "AUTHORIZED",
+    "verifier_type": "ADDRESS",
+    "created_date": "2026-02-12"
+  },
+  "324203320029@gvpce.ac.in": {
+    "email": "324203320029@gvpce.ac.in",
+    "password": "pbkdf2:sha256:600000$pbANPl2VjyqYWM2u$e60d7b1effb5a147233ec5a7c92a1a40ac4c5a446a92aa747472a8d68c793426",
+    "role": "AUTHORIZED",
+    "verifier_type": "POLICE",
+    "created_date": "2026-02-14"
+  },
+  "324203320032@gvpce.ac.in": {
+    "email": "324203320032@gvpce.ac.in",
+    "password": "pbkdf2:sha256:600000$KRZ7xbKOuGZEy8E5$ddffaf651f3d850d4c33865197e985825593a49db750e1b8c6ec6d53c39f027e",
+    "role": "AUTHORIZED",
+    "verifier_type": "ADDRESS",
+    "created_date": "2026-02-14"
+  },
+  "hellooofrnds0@gmail.com": {
+    "email": "hellooofrnds0@gmail.com",
+    "password": "pbkdf2:sha256:600000$e65pYfvzZu6Fh3xQ$16729d596d21bc7ed31cd30f4c2f1a99bbd3643ad2c6a2928b664810181e2a57",
+    "role": "AUTHORIZED",
+    "verifier_type": "CRIMINAL",
+    "created_date": "2026-02-14"
+  },
+  "vanithasam37@gmail.com": {
+    "email": "vanithasam37@gmail.com",
+    "password": "pbkdf2:sha256:600000$kbLwIzmYmRZ2m0h7$bdd4a313743f3b568abbd4648e96316d19c77fba3661157a9bf53630c1584315",
+    "role": "COMPANY",
+    "company_name": "GVP",
+    "created_date": "2026-02-14"
+  },
+  "vanithasam07@gmail.com": {
+    "email": "vanithasam07@gmail.com",
+    "phone": "9391442022",
+    "password": "pbkdf2:sha256:600000$mDQe0n8bUcM1sU1b$0466952403318ca49ca552de587b8b18bd8e465e1acb3687fe41cd7cae405aef",
+    "role": "USER",
+    "name": "muggu vanitha",
+    "age": "22",
+    "is_job_holder": "YES",
+    "company_name": "GVP",
+    "emp_id": "324203320029",
+    "job_role": "lecturer",
+    "house_no": "1-150",
+    "locality": "old pendurthi",
+    "village": "pendurthi",
+    "district": "visakhapatnam",
+    "govt_id_type": "Aadhaar",
+    "govt_id_number": "891559553591",
+    "created_date": "2026-02-14"
+  },
+  "b33855561@gmail.com": {
+    "email": "b33855561@gmail.com",
+    "phone": "7099999999",
+    "password": "pbkdf2:sha256:600000$zipXG9xKIWWUH5FM$06bdabac47b6aea8c1fe370969f614c94ce7f332e952ab80fba08b3c90b0121a",
+    "role": "USER",
+    "name": "bhuvana nakkella",
+    "age": "21",
+    "is_job_holder": "YES",
+    "company_name": "GVP",
+    "emp_id": "324203320032",
+    "job_role": "cleaner",
+    "house_no": "22-D",
+    "locality": "rk beach",
+    "village": "vizag",
+    "district": "visakhapatnam",
+    "govt_id_type": "Aadhaar",
+    "govt_id_number": "132325367687",
+    "created_date": "2026-02-14"
+  },
+  "bhuvaneswarinakkella@gmail.com": {
+    "email": "bhuvaneswarinakkella@gmail.com",
+    "phone": "9898989898",
+    "password": "pbkdf2:sha256:600000$zPWHbEBarpZAQj5Y$0a6093347fe02bebfdb684e46769fbd601f422d753386dcfe0f7def8bcda1883",
+    "role": "USER",
+    "name": "bhuvana",
+    "age": "23",
+    "is_job_holder": "YES",
+    "company_name": "SURAKSHA",
+    "emp_id": "suraksha@123",
+    "job_role": "Police Verifier",
+    "house_no": "22-E",
+    "locality": "rk beach",
+    "village": "vizag",
+    "district": "visakhapatnam",
+    "govt_id_type": "PAN",
+    "govt_id_number": "QSDFT6521M",
+    "created_date": "2026-02-14"
+  },
+  "surakshaid01@gmail.com": {
+    "email": "surakshaid01@gmail.com",
+    "password": "pbkdf2:sha256:600000$5VCj6PEVjO5g1DvG$3a7c87b61c9480a9d0eb1d25e248ed66ba07ebe2353534c637f1a2a866b27620",
+    "role": "COMPANY",
+    "company_name": "SURAKSHA",
+    "created_date": "2026-02-15"
+  },
+  "324203320048@gvpce.ac.in": {
+    "email": "324203320048@gvpce.ac.in",
+    "phone": "9381501823",
+    "password": "pbkdf2:sha256:600000$GOs6W3aYFTFO7VIU$2fb8ab67749a7420a62e9c2f583a6de2a17855e9f11881f6a1ab6ece8b9af352",
+    "role": "USER",
+    "name": "Shalini samalla",
+    "age": "21",
+    "is_job_holder": "NO",
+    "company_name": "",
+    "emp_id": "",
+    "job_role": "",
+    "house_no": "11-0-9",
+    "locality": "simhachalam",
+    "village": "gptm",
+    "district": "visakhapatnam",
+    "govt_id_type": "PAN",
+    "govt_id_number": "TVYSL2790B",
+    "created_date": "2026-02-15"
+  }
+}
