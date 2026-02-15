@@ -3,3 +3,4 @@ cx-Oracle==8.3.0
 Werkzeug==2.3.7
 Jinja2==3.1.2
 Flask-CORS==4.0.0
+gunicorn
