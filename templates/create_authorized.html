@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container py-5">
+    <div class="card">
+        <div class="card-header bg-warning">
+            <h4>Create Authorized User</h4>
+        </div>
+        <div class="card-body">
+            <form method="POST">
+                <div class="mb-3">
+                    <label>Email</label>
+                    <input type="email" name="email" class="form-control" required>
+                </div>
+
+                <div class="mb-3 position-relative">
+    <label>Password</label>
+    <input type="password" 
+           name="password" 
+           id="createAuthPassword"
+           class="form-control" 
+           required>
+
+    <i class="fas fa-eye position-absolute"
+       id="toggleCreateAuthPassword"
+       style="top: 38px; right: 15px; cursor: pointer;"></i>
+</div>
+
+                <button type="submit" class="btn btn-primary">
+                    Create
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.getElementById("toggleCreateAuthPassword").addEventListener("click", function () {
+
+    const passwordInput = document.getElementById("createAuthPassword");
+    const icon = this;
+
+    if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
+    } else {
+        passwordInput.type = "password";
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
+    }
+
+});
+</script>
+{% endblock %}
