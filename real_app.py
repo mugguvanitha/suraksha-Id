@@ -16,7 +16,7 @@ from datetime import datetime, timedelta
 EMAIL_ADDRESS = os.environ.get("EMAIL_ADDRESS") 
 EMAIL_PASSWORD = os.environ.get("EMAIL_PASSWORD") 
 app = Flask(__name__)
-app.secret_key = "suraksha_secret_key"
+app.secret_key = os.environ.get("SECRET_KEY","fallback_secret") 
 
 # -----------------------------
 # DATA CONFIGURATION
