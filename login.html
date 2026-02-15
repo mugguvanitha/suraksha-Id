@@ -1,0 +1,194 @@
+{% extends "base.html" %}
+
+{% block title %}Login - SurakshaID{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0"><i class="fas fa-sign-in-alt"></i> Login to SurakshaID</h4>
+                </div>
+                <div class="card-body">
+                    {% if error %}
+                    <div class="alert alert-danger" role="alert">
+                        <i class="fas fa-exclamation-triangle"></i> {{ error }}
+                    </div>
+                    {% endif %}
+                    
+                    <form method="POST" action="{{ url_for('login') }}" id="loginForm">
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email Address *</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                            <div class="form-text">Enter your registered email address</div>
+                        </div>
+                        
+                        <div class="mb-3 position-relative">
+    <label for="password" class="form-label">Password *</label>
+
+    <input type="password" class="form-control"
+           id="password"
+           name="password"
+           required>
+
+    <i class="fas fa-eye position-absolute"
+       id="togglePassword"
+       style="top: 38px; right: 15px; cursor: pointer;"></i>
+</div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">Remember me</label>
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-sign-in-alt"></i> Login
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <hr>
+                    
+                    <div class="text-center">
+                        <p class="mb-2">Don't have an account?</p>
+                        <a href="{{ url_for('register') }}" class="btn btn-outline-primary">
+                            <i class="fas fa-user-plus"></i> Register Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Role Information Cards -->
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="fas fa-info-circle"></i> Login Information</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <div class="card border-primary">
+                                        <div class="card-body text-center">
+                                            <h6 class="card-title text-primary">User Login</h6>
+                                            <p class="card-text small">Regular users can view their verification status</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card border-warning">
+                                        <div class="card-body text-center">
+                                            <h6 class="card-title text-warning">Authorized Entity</h6>
+                                            <p class="card-text small">Email: @suraksha.auth.in</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card border-danger">
+                                        <div class="card-body text-center">
+                                            <h6 class="card-title text-danger">Admin Login</h6>
+                                            <p class="card-text small">Email: @suraksha.admin.in</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Demo Accounts -->
+            <div class="card mt-4">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0"><i class="fas fa-flask"></i> Demo Accounts</h5>
+                </div>
+                <div class="card-body">
+                    <p class="mb-3">Use these demo accounts to explore the system:</p>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-2">
+                            <strong>Admin:</strong><br>
+                            Email: admin@suraksha.admin.in<br>
+                            Password: admin123
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <strong>Authorized Entity:</strong><br>
+                            Email: auth@suraksha.auth.in<br>
+                            Password: auth123
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-info mt-3">
+                        <i class="fas fa-info-circle"></i> <strong>Note:</strong> For testing purposes, you can register a new user account to experience the complete workflow.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    
+    if (!email || !password) {
+        e.preventDefault();
+        alert('Please enter both email and password');
+        return;
+    }
+    
+    // Show loading state
+    const submitBtn = this.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
+    submitBtn.disabled = true;
+    
+    // Reset button after 3 seconds (in case of slow response)
+    setTimeout(() => {
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+    }, 3000);
+});
+document.addEventListener("DOMContentLoaded", function () {
+
+    const toggle = document.getElementById("togglePassword");
+    const password = document.getElementById("password");
+
+    toggle.addEventListener("click", function () {
+
+        if (password.type === "password") {
+            password.type = "text";
+            toggle.classList.remove("fa-eye");
+            toggle.classList.add("fa-eye-slash");
+        } else {
+            password.type = "password";
+            toggle.classList.remove("fa-eye-slash");
+            toggle.classList.add("fa-eye");
+        }
+
+    });
+
+});
+// Auto-focus on email field
+document.getElementById('email').focus();
+
+// Enter key navigation
+document.getElementById('email').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        document.getElementById('password').focus();
+    }
+});
+
+document.getElementById('password').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        document.getElementById('loginForm').submit();
+    }
+});
+</script>
+{% endblock %}

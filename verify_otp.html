@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mt-5">
+    <div class="card p-4">
+        <h4>Enter OTP</h4>
+
+        {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+        {% endif %}
+
+        {% if success %}
+        <div class="alert alert-success">{{ success }}</div>
+        {% endif %}
+
+        <!-- VERIFY OTP FORM -->
+        <form method="POST" action="{{ url_for('verify_otp') }}">
+            <input type="text" 
+                   name="otp" 
+                   class="form-control mb-3" 
+                   placeholder="Enter 6-digit OTP" 
+                   maxlength="6"
+                   required>
+
+            <button class="btn btn-primary w-100 mb-2">
+                Verify
+            </button>
+        </form>
+
+        <!-- RESEND OTP SECTION -->
+        <div class="text-center mt-3">
+            <button id="resendBtn" 
+                    class="btn btn-link" 
+                    onclick="resendOTP()" 
+                    disabled>
+                Resend OTP (<span id="timer">30</span>s)
+            </button>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+let countdown = 30;
+let resendBtn = document.getElementById("resendBtn");
+let timerDisplay = document.getElementById("timer");
+
+// Countdown Timer
+let interval = setInterval(function() {
+    countdown--;
+    timerDisplay.innerText = countdown;
+
+    if (countdown <= 0) {
+        clearInterval(interval);
+        resendBtn.disabled = false;
+        resendBtn.innerText = "Resend OTP";
+    }
+}, 1000);
+
+// Resend OTP Function
+function resendOTP() {
+    resendBtn.disabled = true;
+    resendBtn.innerText = "Sending...";
+
+    fetch("{{ url_for('resend_otp') }}", {
+        method: "POST"
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert("OTP Resent Successfully!");
+            startTimer();
+        } else {
+            alert("Failed to resend OTP");
+            resendBtn.disabled = false;
+            resendBtn.innerText = "Resend OTP";
+        }
+    });
+}
+
+// Restart Timer
+function startTimer() {
+    countdown = 30;
+    resendBtn.disabled = true;
+    resendBtn.innerHTML = 'Resend OTP (<span id="timer">30</span>s)';
+    timerDisplay = document.getElementById("timer");
+
+    interval = setInterval(function() {
+        countdown--;
+        timerDisplay.innerText = countdown;
+
+        if (countdown <= 0) {
+            clearInterval(interval);
+            resendBtn.disabled = false;
+            resendBtn.innerText = "Resend OTP";
+        }
+    }, 1000);
+}
+</script>
+{% endblock %}

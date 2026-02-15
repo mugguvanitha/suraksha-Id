@@ -1,0 +1,234 @@
+{% extends "base.html" %}
+{% block title %}Manage Users - SurakshaID{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+
+    <!-- Header -->
+    <div class="card bg-danger text-white mb-4">
+        <div class="card-body">
+            <h2><i class="fas fa-users"></i> Manage All Users</h2>
+        </div>
+    </div>
+
+    <!-- 🔎 FILTER SECTION -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <form method="GET" action="{{ url_for('admin_users') }}">
+                <div class="row g-2">
+
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" name="search"
+                               placeholder="Search by Name or VID"
+                               value="{{ request.args.get('search','') }}">
+                    </div>
+
+                    <div class="col-md-2">
+                        <select class="form-select" name="police_status">
+                            <option value="">Police</option>
+                            <option value="PENDING">PENDING</option>
+                            <option value="CLEAR">CLEAR</option>
+                            <option value="FLAGGED">FLAGGED</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-2">
+                        <select class="form-select" name="address_status">
+                            <option value="">Address</option>
+                            <option value="PENDING">PENDING</option>
+                            <option value="CLEAR">CLEAR</option>
+                            <option value="FLAGGED">FLAGGED</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-2">
+                        <select class="form-select" name="criminal_status">
+                            <option value="">Criminal</option>
+                            <option value="PENDING">PENDING</option>
+                            <option value="CLEAR">CLEAR</option>
+                            <option value="FLAGGED">FLAGGED</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-2">
+                        <select class="form-select" name="eligibility_status">
+                            <option value="">Eligibility</option>
+                            <option value="SAFE">SAFE</option>
+                            <option value="RESTRICTED">RESTRICTED</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-1">
+                        <button class="btn btn-primary w-100">
+                            Filter
+                        </button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- TABLE -->
+    <div class="card">
+        <div class="card-body table-responsive">
+
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Verification ID</th>
+                        <th>Name</th>
+                        <th>Police</th>
+                        <th>Address</th>
+                        <th>Criminal</th>
+                        <th>Eligibility</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.VERIFICATION_ID }}</td>
+                        <td>{{ user.NAME if user.NAME else user.EMAIL }}</td>
+
+                        <!-- POLICE -->
+                        <td>
+                          <span class="badge 
+                          {% if user.POLICE_VERIFICATION_STATUS == 'CLEAR' %}bg-success
+                          {% elif user.POLICE_VERIFICATION_STATUS == 'FLAGGED' %}bg-danger
+                          {% else %}bg-warning{% endif %}">
+                          {{ user.POLICE_VERIFICATION_STATUS }}
+                          </span>
+                        </td>
+
+                        <!-- ADDRESS -->
+                        <td>
+                             <span class="badge 
+                               {% if user.ADDRESS_VERIFICATION_STATUS == 'CLEAR' %}bg-success
+                               {% elif user.ADDRESS_VERIFICATION_STATUS == 'FLAGGED' %}bg-danger
+                               {% else %}bg-warning{% endif %}">
+                               {{ user.ADDRESS_VERIFICATION_STATUS }}
+                             </span>
+                        </td>
+
+                        <!-- CRIMINAL -->
+                        <td>
+                          <span class="badge 
+                             {% if user.CRIMINAL_VERIFICATION_STATUS == 'CLEAR' %}bg-success
+                             {% elif user.CRIMINAL_VERIFICATION_STATUS == 'FLAGGED' %}bg-danger
+                             {% else %}bg-warning{% endif %}">
+                             {{ user.CRIMINAL_VERIFICATION_STATUS }}
+                          </span>
+                       </td>
+
+                        <!-- ELIGIBILITY (unchanged) -->
+                        <td>
+                            <span class="badge 
+                                {% if user.ELIGIBILITY_STATUS == 'SAFE' %}
+                                    bg-success
+                                {% else %}
+                                    bg-danger
+                                {% endif %}
+                            ">
+                                {{ user.ELIGIBILITY_STATUS }}
+                            </span>
+                        </td>
+
+                        <td>
+                            <button class="btn btn-sm btn-primary"
+                                onclick="openUpdateModal('{{ user.VERIFICATION_ID }}')">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+
+</div>
+
+
+<!-- MODAL -->
+<div class="modal fade" id="updateModal" tabindex="-1">
+<div class="modal-dialog">
+<div class="modal-content">
+
+    <div class="modal-header">
+        <h5>Update Verification</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+    </div>
+
+    <div class="modal-body">
+        <input type="hidden" id="verificationId">
+
+        <div class="mb-3">
+            <label>Field</label>
+            <select class="form-select" id="updateField">
+                <option value="police">Police</option>
+                <option value="address">Address</option>
+                <option value="criminal">Criminal</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label>Status</label>
+            <select class="form-select" id="newStatus">
+                <option value="PENDING">PENDING</option>
+                <option value="CLEAR">CLEAR</option>
+                <option value="FLAGGED">FLAGGED</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn btn-danger" onclick="adminUpdateVerification()">Update</button>
+    </div>
+
+</div>
+</div>
+</div>
+
+{% endblock %}
+
+
+{% block extra_js %}
+<script>
+
+function openUpdateModal(vid) {
+    document.getElementById("verificationId").value = vid;
+    new bootstrap.Modal(document.getElementById('updateModal')).show();
+}
+
+function adminUpdateVerification() {
+
+    const vid = document.getElementById("verificationId").value;
+    const field = document.getElementById("updateField").value;
+    const status = document.getElementById("newStatus").value;
+
+    fetch('/admin/update_verification', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: `verification_id=${vid}&field=${field}&status=${status}`
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            alert("Updated successfully");
+            location.reload();
+        } else {
+            alert(data.message);
+        }
+    });
+
+}
+
+</script>
+{% endblock %}

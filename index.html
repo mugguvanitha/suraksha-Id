@@ -1,0 +1,215 @@
+{% extends "base.html" %}
+
+{% block title %}SurakshaID - Home{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-4">Welcome to SurakshaID</h1>
+                <p class="lead mb-4">Privacy-Aware Background Verification and Access Control System designed to enhance public safety in sensitive environments.</p>
+                <div class="d-flex gap-3">
+                    <a href="{{ url_for('register') }}" class="btn btn-light btn-lg">
+                        <i class="fas fa-user-plus"></i> Register Now
+                    </a>
+                    <a href="{{ url_for('login') }}" class="btn btn-outline-light btn-lg">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="text-center">
+                    <i class="fas fa-shield-alt" style="font-size: 12rem; opacity: 0.3;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center mb-5">
+                <h2 class="display-5 fw-bold">Key Features</h2>
+                <p class="lead text-muted">Comprehensive verification system with role-based access control</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card feature-card h-100">
+                    <div class="card-body">
+                        <i class="fas fa-user-check"></i>
+                        <h4 class="card-title">User Registration</h4>
+                        <p class="card-text">Secure registration with government ID verification and automatic Verification ID generation.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4">
+                <div class="card feature-card h-100">
+                    <div class="card-body">
+                        <i class="fas fa-shield-alt"></i>
+                        <h4 class="card-title">Role-Based Access</h4>
+                        <p class="card-text">Three-tier security model with Users, Authorized Entities, and Administrators.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4">
+                <div class="card feature-card h-100">
+                    <div class="card-body">
+                        <i class="fas fa-clipboard-check"></i>
+                        <h4 class="card-title">Verification Workflow</h4>
+                        <p class="card-text">Structured verification process with police and address verification status tracking.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-4">
+            <div class="col-md-4 mb-4">
+                <div class="card feature-card h-100">
+                    <div class="card-body">
+                        <i class="fas fa-history"></i>
+                        <h4 class="card-title">Audit Logging</h4>
+                        <p class="card-text">Complete audit trail of all system actions with timestamps and user tracking.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4">
+                <div class="card feature-card h-100">
+                    <div class="card-body">
+                        <i class="fas fa-download"></i>
+                        <h4 class="card-title">Data Export</h4>
+                        <p class="card-text">Export verification records and audit logs in CSV and JSON formats.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4">
+                <div class="card feature-card h-100">
+                    <div class="card-body">
+                        <i class="fas fa-lock"></i>
+                        <h4 class="card-title">Privacy Protection</h4>
+                        <p class="card-text">Masked sensitive information and controlled access to personal data.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="py-5 bg-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center mb-5">
+                <h2 class="display-5 fw-bold">How It Works</h2>
+                <p class="lead text-muted">Simple three-step verification process</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-4 text-center mb-4">
+                <div class="mb-3">
+                    <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                        <span class="fw-bold fs-4">1</span>
+                    </div>
+                </div>
+                <h5>Register</h5>
+                <p class="text-muted">Create your account with personal details and government ID information.</p>
+            </div>
+            
+            <div class="col-md-4 text-center mb-4">
+                <div class="mb-3">
+                    <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                        <span class="fw-bold fs-4">2</span>
+                    </div>
+                </div>
+                <h5>Verification</h5>
+                <p class="text-muted">Authorized entities review and verify your background information.</p>
+            </div>
+            
+            <div class="col-md-4 text-center mb-4">
+                <div class="mb-3">
+                    <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                        <span class="fw-bold fs-4">3</span>
+                    </div>
+                </div>
+                <h5>Access Granted</h5>
+                <p class="text-muted">Receive your verification status and access based on eligibility.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- User Roles Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center mb-5">
+                <h2 class="display-5 fw-bold">User Roles & Permissions</h2>
+                <p class="lead text-muted">Understanding the access control system</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0"><i class="fas fa-user"></i> USER</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-success"></i> Register with personal details</li>
+                            <li><i class="fas fa-check text-success"></i> View verification status</li>
+                            <li><i class="fas fa-check text-success"></i> Access personal dashboard</li>
+                            <li><i class="fas fa-times text-danger"></i> Cannot verify others</li>
+                            <li><i class="fas fa-times text-danger"></i> Limited data access</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-header bg-warning text-dark">
+                        <h5 class="mb-0"><i class="fas fa-user-shield"></i> AUTHORIZED ENTITY</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-success"></i> Search users by ID/Name/Phone</li>
+                            <li><i class="fas fa-check text-success"></i> Update verification status</li>
+                            <li><i class="fas fa-check text-success"></i> View verification records</li>
+                            <li><i class="fas fa-times text-danger"></i> Cannot delete records</li>
+                            <li><i class="fas fa-times text-danger"></i> Limited admin functions</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-header bg-danger text-white">
+                        <h5 class="mb-0"><i class="fas fa-user-cog"></i> ADMIN</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-success"></i> Full system access</li>
+                            <li><i class="fas fa-check text-success"></i> Override verification decisions</li>
+                            <li><i class="fas fa-check text-success"></i> View audit logs</li>
+                            <li><i class="fas fa-check text-success"></i> Export data (CSV/JSON)</li>
+                            <li><i class="fas fa-check text-success"></i> System statistics</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
