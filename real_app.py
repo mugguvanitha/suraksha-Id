@@ -13,8 +13,8 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from datetime import datetime, timedelta
 
-EMAIL_ADDRESS = "vanithasam47@gmail.com"
-EMAIL_PASSWORD = os.environ.get("EMAIL_APP_PASSWORD") 
+EMAIL_ADDRESS = os.environ.get("EMAIL_ADDRESS") 
+EMAIL_PASSWORD = os.environ.get("EMAIL_PASSWORD") 
 app = Flask(__name__)
 app.secret_key = "suraksha_secret_key"
 
