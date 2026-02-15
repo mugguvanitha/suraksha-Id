@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header bg-dark text-white">
+            <h4>User Verification Details</h4>
+        </div>
+        <div class="card-body">
+
+            <p><strong>Name:</strong> {{ user.name }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>Phone:</strong> {{ user.phone }}</p>
+            <p><strong>Age:</strong> {{ user.age }}</p>
+
+            <hr>
+
+            <h5>Address Details</h5>
+            <p>{{ user.house_no }}, {{ user.locality }},
+               {{ user.village }}, {{ user.district }}</p>
+
+            <hr>
+
+            <h5>Verification Status</h5>
+            <p>Police: {{ record.POLICE_VERIFICATION_STATUS }}</p>
+            <p>Address: {{ record.ADDRESS_VERIFICATION_STATUS }}</p>
+            <p>Criminal: {{ record.CRIMINAL_VERIFICATION_STATUS }}</p>
+            <p>Eligibility: {{ record.ELIGIBILITY_STATUS }}</p>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
