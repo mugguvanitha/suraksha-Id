@@ -1,0 +1,351 @@
+{% extends "base.html" %}
+
+{% block title %}Authorized Dashboard - SurakshaID{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <!-- Header Section -->
+        <div class="col-12 mb-4">
+            <div class="card bg-warning text-dark">
+                <div class="card-body">
+                    <h2 class="card-title">
+                        <i class="fas fa-user-shield"></i> Authorized Entity Dashboard
+                    </h2>
+                    <p class="card-text">Search users and update verification status</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Search + Filter Section (Same as Admin) -->
+<div class="row mb-4">
+    <div class="col-12">
+        <form method="GET">
+            <div class="row g-2">
+
+                <!-- Search -->
+                <div class="col-md-3">
+                    <input type="text"
+                           name="search"
+                           class="form-control"
+                           placeholder="Search by Name or VID"
+                           value="{{ request.args.get('search','') }}">
+                </div>
+
+                <!-- Police -->
+                <div class="col-md-2">
+                    <select name="police_status" class="form-select">
+                        <option value="">Police</option>
+                        <option value="PENDING">Pending</option>
+                        <option value="CLEAR">Clear</option>
+                        <option value="FLAGGED">Flagged</option>
+                    </select>
+                </div>
+
+                <!-- Address -->
+                <div class="col-md-2">
+                    <select name="address_status" class="form-select">
+                        <option value="">Address</option>
+                        <option value="PENDING">Pending</option>
+                        <option value="CLEAR">Clear</option>
+                        <option value="FLAGGED">Flagged</option>
+                    </select>
+                </div>
+
+                <!-- Criminal -->
+                <div class="col-md-2">
+                    <select name="criminal_status" class="form-select">
+                        <option value="">Criminal</option>
+                        <option value="PENDING">Pending</option>
+                        <option value="CLEAR">Clear</option>
+                        <option value="FLAGGED">Flagged</option>
+                    </select>
+                </div>
+
+                <!-- Eligibility -->
+                <div class="col-md-2">
+                    <select name="eligibility_status" class="form-select">
+                        <option value="">Eligibility</option>
+                        <option value="SAFE">Safe</option>
+                        <option value="RESTRICTED">Restricted</option>
+                    </select>
+                </div>
+
+                <!-- Filter Button -->
+                <div class="col-md-1">
+                    <button type="submit" class="btn btn-primary w-100">
+                        Filter
+                    </button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+    <!-- Search Results -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-users"></i> Records
+                    <span class="badge bg-primary">{{ search_results|length }}</span>
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Verification ID</th>
+                                <th>Name</th>
+                                <th>Phone</th>
+                                <th>Govt ID Type</th>
+                                <th>Police Status</th>
+                                <th>Address Status</th>
+                                <th>Criminal Status</th>
+                                <th>Eligibility</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in search_results %}
+                            <tr>
+                                <td><strong>{{ user.VERIFICATION_ID }}</strong></td>
+                                <td>{{ user.NAME }}</td>
+                                <td>{{ user.PHONE_NUMBER }}</td>
+                                <td>{{ user.GOVT_ID_TYPE }}</td>
+
+                                <td>
+                                    <span class="status-badge status-{{ user.POLICE_VERIFICATION_STATUS.lower() }}">
+                                        {{ user.POLICE_VERIFICATION_STATUS }}
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <span class="status-badge status-{{ user.ADDRESS_VERIFICATION_STATUS.lower() }}">
+                                        {{ user.ADDRESS_VERIFICATION_STATUS }}
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <span class="status-badge status-{{ user.CRIMINAL_VERIFICATION_STATUS.lower() }}">
+                                        {{ user.CRIMINAL_VERIFICATION_STATUS }}
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <span class="status-badge status-{{ user.ELIGIBILITY_STATUS.lower() }}">
+                                        {{ user.ELIGIBILITY_STATUS }}
+                                    </span>
+                                </td>
+
+                                <td>
+                                    {% if verifier_type in ["POLICE","ADDRESS","CRIMINAL"] %}
+                                        <button class="btn btn-sm btn-primary"
+                                            onclick="openUpdateModal('{{ user.VERIFICATION_ID }}')">
+                                            <i class="fas fa-edit"></i> Update
+                                        </button>
+                                    {% else %}
+                                        <button class="btn btn-sm btn-secondary" disabled>
+                                            No Access
+                                        </button>
+                                    {% endif %}
+
+                                    <a href="{{ url_for('authorized_view_user', vid=user.VERIFICATION_ID) }}"
+                                       class="btn btn-dark btn-sm">
+                                       <i class="fas fa-eye"></i> View
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Quick Stats -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <a href="{{ url_for('authorized_dashboard', filter_type='all') }}" style="text-decoration:none;">
+<div class="stat-card">
+    <div class="stat-number">{{ total_users }}</div>
+    <div class="stat-label">Total Users</div>
+</div>
+</a>
+        </div>
+        <div class="col-md-3">
+            <a href="{{ url_for('authorized_dashboard', filter_type='pending') }}" style="text-decoration:none;">
+<div class="stat-card">
+    <div class="stat-number text-warning">{{ pending_users }}</div>
+    <div class="stat-label">Pending Verifications</div>
+</div>
+</a>
+        </div>
+        <div class="col-md-3">
+            <a href="{{ url_for('authorized_dashboard', filter_type='safe') }}" style="text-decoration:none;">
+<div class="stat-card">
+    <div class="stat-number text-success">{{ safe_users }}</div>
+    <div class="stat-label">Safe Users</div>
+</div>
+</a>
+        </div>
+        <div class="col-md-3">
+            <a href="{{ url_for('authorized_dashboard', filter_type='restricted') }}" style="text-decoration:none;">
+<div class="stat-card">
+    <div class="stat-number text-danger">{{ restricted_users }}</div>
+    <div class="stat-label">Restricted Users</div>
+</div>
+</a>
+        </div>
+    </div>
+    
+    <!-- Recent Activity -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fas fa-history"></i> Recent Verification Updates</h5>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i> Use the search function above to find specific users and update their verification status.
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card border-success">
+                                <div class="card-body text-center">
+                                    <h6 class="text-success">CLEAR Status</h6>
+                                    <p class="small mb-0">Marks verification as successfully completed</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card border-danger">
+                                <div class="card-body text-center">
+                                    <h6 class="text-danger">FLAGGED Status</h6>
+                                    <p class="small mb-0">Indicates issues found during verification</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card border-warning">
+                                <div class="card-body text-center">
+                                    <h6 class="text-warning">PENDING Status</h6>
+                                    <p class="small mb-0">Verification is still in progress</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="updateModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Update Verification</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+
+                <!-- 🔥 ADD THIS LINE -->
+                <input type="hidden" id="verificationId">
+
+                <!-- Existing dropdown -->
+                <label>Status</label>
+                <select class="form-select" id="newPoliceStatus">
+                    <option value="PENDING">PENDING</option>
+                    <option value="CLEAR">CLEAR</option>
+                    <option value="FLAGGED">FLAGGED</option>
+                </select>
+
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button class="btn btn-primary" onclick="updateVerification()">Update</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Load statistics on page load
+document.addEventListener('DOMContentLoaded', function() {
+    loadStatistics();
+});
+
+function loadStatistics() {
+    // This would typically be an AJAX call to get real statistics
+    // For now, showing placeholder values
+    document.getElementById('totalUsers').textContent = '0';
+    document.getElementById('pendingUsers').textContent = '0';
+    document.getElementById('safeUsers').textContent = '0';
+    document.getElementById('restrictedUsers').textContent = '0';
+}
+
+function openUpdateModal(verificationId) {
+    document.getElementById('verificationId').value = verificationId;
+    var modal = new bootstrap.Modal(document.getElementById('updateModal'));
+    modal.show();
+}
+
+function updateVerification() {
+
+    var verificationId = document.getElementById('verificationId').value;
+    var newStatus = document.getElementById('newPoliceStatus').value;
+
+    if (!newStatus) {
+        alert('Please select a status');
+        return;
+    }
+
+    var formData = new FormData();
+    formData.append('verification_id', verificationId);
+    formData.append('status', newStatus);
+
+    fetch('/authorized/update_verification', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Updated successfully');
+            location.reload();
+        } else {
+            alert(data.message || 'Failed to update');
+        }
+    })
+    .catch(error => {
+        console.error(error);
+        alert('Error occurred');
+    });
+}
+
+// Search form validation
+document.getElementById('searchForm').addEventListener('submit', function(e) {
+    const searchTerm = document.querySelector('input[name="search_term"]').value.trim();
+    if (searchTerm.length < 3) {
+        e.preventDefault();
+        alert('Please enter at least 3 characters to search');
+    }
+});
+
+// Auto-focus on search field
+document.querySelector('input[name="search_term"]').focus();
+</script>
+{% endblock %}
