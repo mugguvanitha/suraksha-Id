@@ -1086,7 +1086,3 @@ def delete_user(vid):
 
 # ---------------- RUN ---------------- #
 
-if __name__ == "__main__":
-    print("Starting SurakshaID...")
-    print("Open http://localhost:5000")
-    app.run(debug=True)
